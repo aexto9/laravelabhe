@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\http\Controllers\FormController;
 use App\http\Controllers\DashboardController;
+use App\http\Controllers\formskillController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +33,10 @@ Route::get('/nilai', function(){
     return view ('nilai');
 });
 
+Route::get('/pemeriksaan', function(){
+    return view ('pemeriksaan');
+});
+
 Route::get('/hallo2', function(){
     return view ('hallo.halloworld');
 });
@@ -40,3 +45,6 @@ Route::get('/form',[FormController::class,'index']);
 Route::post('/hasil',[FormController::class, 'store']);
 
 Route::get('/dashboard',[DashboardController::class, 'index']);
+
+Route::get('/skill',[formskillController::class,'index']);
+Route::post('/hasilskill',[formskillController::class,'store']);
