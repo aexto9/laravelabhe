@@ -1,7 +1,5 @@
 @extends('admin.layout.appadmin')
 @section('content')
-
-@if(Auth::user()-> role != 'pelanggan')
     <h1 class="mt-4">Tables</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
@@ -18,10 +16,7 @@
     <div class="card mb-4">
         <div class="card-header">
             <!-- <i class="fas fa-table me-1"></i> -->
-
-            @if(Auth::user() -> role == 'admin')
             <a class="btn btn-success" href="{{ url('produk/create') }}">Create Produk</a>
-            @endif
         </div>
         <div class="card-body table-responsive">
             <table id="datatablesSimple">
@@ -68,7 +63,7 @@
             </table>
         </div>
     </div>
-
+@endsection
 <script>
     function confirmDelete(event) {
         if (!confirm('Anda yakin Hapus Pelanggan ID {{ $p->id }} ?')) {
@@ -76,9 +71,4 @@
             return false;
         }
     }
-</script>
-
-@else
-@include('admin.access_denied')
-@endif    
-@endsection
+</script

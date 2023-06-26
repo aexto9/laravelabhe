@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use App\Models\KategoriProduk;
 
 class Pesanan extends Model
 {
@@ -22,5 +24,13 @@ class Pesanan extends Model
 
     public function produk(){
         return $this->hasMany(Produk::class);
+    }
+
+    public function getAllData()
+    {
+        return DB::table('pesanan')
+            ->join('produk', 'pesanan.produk_id', '=', 'produk.id')
+            ->select('pesanan.*', 'produk.nama as nama')
+            ->get();
     }
 }

@@ -29,12 +29,15 @@ class PesananController extends Controller
         return view('admin.pesanan.pesanan', compact('pesanan'));
     }
 
-    /**
+        /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $produk = DB::table('produk')->get();
+        $pesanan = DB::table('kategori_produk')->get();
+
+        return view('admin.pesanan.create', compact('produk', 'pesanan'));
     }
 
     /**
@@ -42,38 +45,65 @@ class PesananController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pesanan = new Pesanan;
+        $pesanan->date = $request->date;
+        $pesanan->nama = $request->nama;
+        $pesanan->alamat = $request->alamat;
+        $pesanan->nohp = $request->nohp;
+        $pesanan->email = $request->email;
+        $pesanan->j_pesan = $request->j_pesan;
+        $pesanan->deskripsi = $request->deskripsi;
+        $pesanan->produk_id = $request->produk_id;
+        $pesanan->save();
+        return redirect('pesanan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function view($id)
     {
-        //
+        $pesanan = Pesanan::find($id); //select * from pesanan where id=1
+        return view('admin.pesanan.view', ['pesanan' => $pesanan]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $pesanan = Pesanan::find($id); //select * from pesanan where id=1
+        $kategori_pesanan = KategoriProduk::find($id);
+        return view('admin.pesanan.edit', ['pesanan' => $pesanan, 'kategori_pesanan' => $kategori_pesanan]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        // $pesanan = new pesanan;
+        $id = $request->id;
+        $produk = Produk::find($id);
+        $produk->kode = $request->kode;
+        $produk->nama = $request->nama;
+        $produk->harga_jual = $request->harga_jual;
+        $produk->harga_beli = $request->harga_beli;
+        $produk->stok = $request->stok;
+        $produk->min_stok = $request->min_stok;
+        $produk->deskripsi = $request->deskripsi;
+        $produk->kategori_produk_id = $request->kategori_produk_id;
+        $produk->save();
+        return redirect('produk');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete($id)
     {
-        //
+        $produk = Produk::find($id);
+        $produk->delete(); //delete from produk where id=1
+        return redirect('/produk');
     }
 }
